@@ -1,0 +1,5 @@
+<section>
+  <h1 class="main__header">Odaberite nacin placanja</h1>
+  <app-payment-method class= "body-content__wrapper" *ngFor="let pm of paymentMethods" [paymentMethod]="pm" (paymentClicked)="onPayClick($event)">
+  </app-payment-method>
+</section>
