@@ -5,8 +5,7 @@ import { PaypalService } from './paypal.service';
 
 @Component({
   selector: 'app-paypal-success',
-  templateUrl: './paypal-success.component.html',
-  styleUrls: ['./paypal-success.component.css']
+  templateUrl: './paypal-success.component.html'
 })
 export class PaypalSuccessComponent implements OnInit {
 
