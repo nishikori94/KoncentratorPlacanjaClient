@@ -7,6 +7,7 @@ export interface PaymentMethod {
   name: string;
   naziv: string;
   url: string;
+  imgPath: string;
 }
 
 export interface UrlResponse {

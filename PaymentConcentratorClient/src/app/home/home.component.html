@@ -1,5 +1,7 @@
 <section>
-  <h1 class="main__header">Odaberite nacin placanja</h1>
-  <app-payment-method class= "body-content__wrapper" *ngFor="let pm of paymentMethods" [paymentMethod]="pm" (paymentClicked)="onPayClick($event)">
-  </app-payment-method>
+  <div class="container mt-5"><div class="row justify-content-center"><div class="col-6 lightBlue">
+  <h1 class="main__header">Odaberite način plaćanja</h1>
+  <div class="row justify-content-center"><app-payment-method class= "body-content__wrapper" *ngFor="let pm of paymentMethods" [paymentMethod]="pm" (paymentClicked)="onPayClick($event)">
+  </app-payment-method></div>
+</div></div></div>
 </section>

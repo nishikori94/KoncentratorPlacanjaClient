@@ -1,3 +1,2 @@
-<div class = "left_section">{{ paymentMethod?.name}}
-  <button (click)="onPaymentClick()">Plati</button>
+<div class="m-3"><button type="button" class="btn btn-outline-primary btn-lg" (click)="onPaymentClick()"> <img [src]="paymentMethod.imgPath">{{paymentMethod?.name}}</button>
 </div>
