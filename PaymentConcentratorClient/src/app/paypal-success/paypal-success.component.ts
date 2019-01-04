@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HomeService } from '../home/home.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PaypalService } from './paypal.service';
 
 @Component({
@@ -9,16 +9,17 @@ import { PaypalService } from './paypal.service';
 })
 export class PaypalSuccessComponent implements OnInit {
 
-  constructor(private paypalService: PaypalService, private activatedRoute: ActivatedRoute) { }
+  constructor(private paypalService: PaypalService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe(params => {
       if(params['paymentId'] !== undefined && params['PayerID'] !== undefined) {
-        this.paypalService.completePayment(params['paymentId'], params['PayerID']).subscribe( response => {
-          console.log(response.json());
-        });
+        this.paypalService.completePayment(params['paymentId'], params['PayerID']);
       }
-    })
+    });
+    setTimeout(() => {
+      window.location.href = "https://localhost:4201";
+  }, 5000); 
 
   }
 
