@@ -20,6 +20,7 @@ export class PaypalSuccessComponent implements OnInit {
     setTimeout(() => {
       window.location.href = "https://localhost:4201";
   }, 5000); 
+    
 
   }
 
