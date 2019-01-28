@@ -1,7 +1,7 @@
 import { HomeService, PaymentMethod, UrlResponse } from './home.service';
 
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, Output } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -12,8 +12,9 @@ export class HomeComponent implements OnInit {
 
   casopisId: string;
   merchantOrderId: string;
+  message=' asfas as';
 
-  constructor(private homeService: HomeService, private route: ActivatedRoute) { }
+  constructor(private homeService: HomeService, private route: ActivatedRoute, private router: Router) { }
 
   paymentMethods: PaymentMethod[] = [];
   urlResponse: UrlResponse;
@@ -25,7 +26,6 @@ export class HomeComponent implements OnInit {
       // In a real app: dispatch action to load the details here.
       this.homeService.getPaymentMethods(this.casopisId).subscribe(data => {
         this.paymentMethods = data.map(pm => {
-            console.log(pm.naziv);
             return {
                 id: pm.id,
                 name: pm.naziv,
@@ -36,9 +36,6 @@ export class HomeComponent implements OnInit {
         });
     });
    });
-
-    
-
   }
 
   onPayClick(id: number) {
@@ -49,8 +46,14 @@ export class HomeComponent implements OnInit {
     }
 
     const paymentMethod = paymentMethods[0];
-      this.homeService.makePayment(paymentMethod.url, this.merchantOrderId).subscribe(data => {
-        window.location.href = data.url;
-      });
+      this.homeService.makePayment(paymentMethod.url, this.merchantOrderId)
+          .subscribe(data =>  {
+                      window.location.href = data.url;
+                      },
+                     error => {
+                       this.message = error;
+                       this.router.navigate(['redirect/paymentUnsuccessful']);
+                      }
+                    );
   }
 }

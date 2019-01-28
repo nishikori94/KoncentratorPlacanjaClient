@@ -10,13 +10,17 @@ import { RouterModule } from '@angular/router';
 import { AppRoutingModule } from './app-routing.module';
 import { PaypalSuccessComponent } from './paypal-success/paypal-success.component';
 import { PaypalService } from './paypal-success/paypal.service';
+import { PaymentUnsuccessfulComponent } from './home/payment-unsuccessful/payment-unsuccessful.component';
+import { UnsuccessfulComponent } from './unsuccessful/unsuccessful.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     PaymentMethodComponent,
-    PaypalSuccessComponent
+    PaypalSuccessComponent,
+    PaymentUnsuccessfulComponent,
+    UnsuccessfulComponent,
   ],
   imports: [
     BrowserModule,
