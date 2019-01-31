@@ -5,4 +5,6 @@
   </app-payment-method></div>
 </div></div></div>
 </section>
-<app-payment-unsuccessful [message]="message"></app-payment-unsuccessful>
+{{errorMessageShown}}
+<app-payment-unsuccessful *ngIf="errorMessageShown" [message]="message"></app-payment-unsuccessful>
+

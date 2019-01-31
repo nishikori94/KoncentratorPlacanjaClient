@@ -2,6 +2,7 @@ import { HomeService, PaymentMethod, UrlResponse } from './home.service';
 
 import { Component, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Error } from './payment-unsuccessful/payment-unsuccessful.component' 
 
 @Component({
   selector: 'app-home',
@@ -12,7 +13,9 @@ export class HomeComponent implements OnInit {
 
   casopisId: string;
   merchantOrderId: string;
-  message=' asfas as';
+  message: Error;
+
+  errorMessageShown: boolean = false;
 
   constructor(private homeService: HomeService, private route: ActivatedRoute, private router: Router) { }
 
@@ -24,7 +27,8 @@ export class HomeComponent implements OnInit {
       this.casopisId = params.get('merchantId'); // (+) converts string 'id' to a number
       this.merchantOrderId = params.get('merchantOrderId');
       // In a real app: dispatch action to load the details here.
-      this.homeService.getPaymentMethods(this.casopisId).subscribe(data => {
+      this.homeService.getPaymentMethods(this.casopisId)
+      .subscribe(data => {
         this.paymentMethods = data.map(pm => {
             return {
                 id: pm.id,
@@ -34,7 +38,21 @@ export class HomeComponent implements OnInit {
                 imgPath: pm.imgPath
             };
         });
-    });
+    }, 
+    error => {
+      this.message = {
+       message: error
+      };
+      this.errorMessageShown = true;
+     });
+   });
+
+   
+   this.homeService.errorHappened.subscribe(val => {
+     if(!val){
+       return;
+     }
+     this.errorMessageShown = true;
    });
   }
 
@@ -51,8 +69,10 @@ export class HomeComponent implements OnInit {
                       window.location.href = data.url;
                       },
                      error => {
-                       this.message = error;
-                       this.router.navigate(['redirect/paymentUnsuccessful']);
+                       this.message = {
+                        message: error
+                       };
+                       this.errorMessageShown = true;
                       }
                     );
   }

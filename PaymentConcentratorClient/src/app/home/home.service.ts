@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
@@ -22,10 +22,13 @@ export interface UrlResponse {
 })
 export class HomeService {
 
+  errorHappened: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(null);
+
   constructor(private http: HttpClient) { }
 
   getPaymentMethods(merchantId: string): Observable<PaymentMethod[]> {
-      return this.http.get<PaymentMethod[]>(`https://localhost:9091/api/tipoviPlacanja/` + merchantId);
+      return this.http.get<PaymentMethod[]>(`https://localhost:9091/api/tipoviPlacanja/` + merchantId).pipe(
+        catchError(this.errorHandler));   
   }
 
   makePayment(url: string, merchantOrderId: string): Observable<UrlResponse> {
@@ -34,8 +37,7 @@ export class HomeService {
   }
 
   errorHandler(error: HttpErrorResponse){
-    
-    return throwError(error.message || "Server error")
+    return throwError(error.message || "Server error");
   }
   
 }
