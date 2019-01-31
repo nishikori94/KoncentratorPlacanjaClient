@@ -6,3 +6,9 @@
 .lightBlue{
     background-color: #e2edff;
 }
+
+.lightRed{
+    background-color: salmon;
+    color: white;
+    text-align: center;
+}
